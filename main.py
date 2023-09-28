@@ -12,21 +12,22 @@ def print_strings():
     print('stub')
 
 
+# WIP function
 def encrypt():
     global direct_num, shift_num, rand_strings, enc_strings
     for i in range(len(rand_strings)):
-
-        r_string = str(rand.__getattribute__())
-        shift_num = rand.__getattribute__()
-        direct_num = rand_strings[i].__getitem__(direct_num)
+        data = rand_strings[i]
+        print(data.__getattribute__('rand_string'))
+        r_string = data.__getattribute__('rand_string')
+        shift_num = data.__getattribute__('shift_num')
+        direct_num = data.__getattribute__('shift_dir')
         print(direct_num)
         print(shift_num)
-        print(r_string)
+
         encrypted_text = ""
 
-
-"""
-        for char in range(len(r_string)):
+        for j in range(len(r_string)):
+            char = r_string[j]
             if char.isalpha():
                 is_upper = char.isupper()
                 char = char.lower()  # Convert to lowercase for easier manipulation
@@ -46,8 +47,6 @@ def encrypt():
                 encrypted_text += char  # Preserve non-alphabet characters
 
             enc_strings.append(encrypted_text)
-
-"""
 
 
 def gen_direct_num():
