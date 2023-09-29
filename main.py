@@ -16,9 +16,17 @@ def print_strings():
         print('============================================')
         print('')
         data = rand_strings[i]
+        shift_dir = data.__getattribute__('shift_dir')
+
+        if shift_dir == 0:
+            shift_dir_str = 'right (0)'
+        elif shift_dir == 1:
+            shift_dir_str = 'left (1)'
+        else:
+            shift_dir_str = 'Unknown'
         print('Original string: ' + data.__getattribute__('rand_string'))
         print('Shift Number: ' + str(data.__getattribute__('shift_num')))
-        print('Direction Number: ' + str(data.__getattribute__('shift_dir')))
+        print('Direction: ' + shift_dir_str)
         print('Encrypted String: ' + enc_strings[i])
 
     print('==========================================')
@@ -46,8 +54,6 @@ def encrypt():
                 elif direct_num == 1:
                     encrypted_char_code = ((char_code - ord('a') - shift_num) % 26) + ord('a')
 
-                if encrypted_char_code < 0:
-                    encrypted_char_code += 26
                 encrypted_char = chr(encrypted_char_code)
 
                 if is_upper:
