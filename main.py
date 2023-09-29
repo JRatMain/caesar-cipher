@@ -32,10 +32,13 @@ def print_strings():
     print('==========================================')
 
 
-# WIP function
+# Encrypts each string and adds it to a different list.
+#
 def encrypt():
     global direct_num, shift_num, rand_strings, enc_strings
     for i in range(len(rand_strings)):
+        # Data uses the object from the current index of the list to supply variables from
+        # the random string class.
         data = rand_strings[i]
         r_string = data.__getattribute__('rand_string')
         shift_num = int(data.__getattribute__('shift_num'))
@@ -46,19 +49,34 @@ def encrypt():
         for char in r_string:
             if char.isalpha():
                 is_upper = bool(char.isupper())
-                char = char.lower()  # Convert to lowercase for easier manipulation
+                char = char.lower()  # Converting to lowercase for easier manipulation
                 char_code = ord(char)
 
                 if direct_num == 0:
-                    encrypted_char_code = ((char_code - ord('a') + shift_num) % 26) + ord('a')
+                    encrypted_char_code = ((char_code - ord('a') + shift_num) % 26) + ord('a')  # Encrypts the character
+                    # Specifically, it shifts the value using the character's Unicode code point with the cipher
+                    # formula.
                 elif direct_num == 1:
-                    encrypted_char_code = ((char_code - ord('a') - shift_num) % 26) + ord('a')
+                    encrypted_char_code = ((char_code - ord('a') - shift_num) % 26) + ord(
+                        'a')  # Encrypts the character.
+                    # It uses the Unicode code point of that character and encrypts it using the Caesar cipher formula.
 
                 encrypted_char = chr(encrypted_char_code)
 
                 if is_upper:
-                    encrypted_char = encrypted_char.upper()  # Preserve uppercase
+                    encrypted_char = encrypted_char.upper()  # Preserve uppercase letters.
                 encrypted_text += encrypted_char
+            elif char.isdigit():
+                char_code = ord(char)
+                if direct_num == 0:
+                    encrypted_char_code = ((char_code - ord('0') + shift_num) % 10) + ord('0')  # Encrypts the character
+                    # Specifically, it shifts the value using the character's ASCII code point with the cipher
+                    # formula.
+                elif direct_num == 1:
+                    encrypted_char_code = ((char_code - ord('0') - shift_num) % 10) + ord(
+                        '0')  # Encrypts the character.
+                    # It uses the ASCII code point of that character and encrypts it using the Caesar cipher formula.
+
             else:
                 encrypted_text += char  # Preserve non-alphabet characters
 
