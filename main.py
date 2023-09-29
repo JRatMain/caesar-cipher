@@ -1,14 +1,21 @@
+# Random module imported to randomize strings, shift and direction numbers.
 import random
+# Imports the string module to manipulate characters.
 import string
 
+# imports the random string file for generating random string objects.
 import random_string as rand
 
+# Global variables. One list stores random string objects and the other stores the encrypted strings.
+# shift_num and direct_num indicate the amount of letters to shift through
+# and the direction of the shift respectively.
 rand_strings = []
 enc_strings = []
 shift_num = 0
 direct_num = 0
 
 
+# Prints the strings of the original list and the encrypted strings.
 def print_strings():
     global direct_num, shift_num, rand_strings, enc_strings
     print('=============================================')
@@ -32,8 +39,7 @@ def print_strings():
     print('==========================================')
 
 
-# Encrypts each string and adds it to a different list.
-#
+# Encrypts each string and adds it to a different list of encrypted strings.
 def encrypt():
     global direct_num, shift_num, rand_strings, enc_strings
     for i in range(len(rand_strings)):
@@ -43,10 +49,9 @@ def encrypt():
         r_string = data.__getattribute__('rand_string')
         shift_num = int(data.__getattribute__('shift_num'))
         direct_num = data.__getattribute__('shift_dir')
-        print(direct_num)
-        print(shift_num)
         encrypted_text = ''
         for char in r_string:
+
             if char.isalpha():
                 is_upper = bool(char.isupper())
                 char = char.lower()  # Converting to lowercase for easier manipulation
@@ -66,8 +71,10 @@ def encrypt():
                 if is_upper:
                     encrypted_char = encrypted_char.upper()  # Preserve uppercase letters.
                 encrypted_text += encrypted_char
+
             elif char.isdigit():
                 char_code = ord(char)
+
                 if direct_num == 0:
                     encrypted_char_code = ((char_code - ord('0') + shift_num) % 10) + ord('0')  # Encrypts the character
                     # Specifically, it shifts the value using the character's ASCII code point with the cipher
@@ -76,25 +83,31 @@ def encrypt():
                     encrypted_char_code = ((char_code - ord('0') - shift_num) % 10) + ord(
                         '0')  # Encrypts the character.
                     # It uses the ASCII code point of that character and encrypts it using the Caesar cipher formula.
+                encrypted_char = chr(encrypted_char_code)
 
+                encrypted_text += encrypted_char
             else:
                 encrypted_text += char  # Preserve non-alphabet characters
 
         enc_strings.append(encrypted_text)
 
 
+# Generates the direction number and returns it.
 def gen_direct_num():
     global direct_num
     direct_num = random.randint(0, 1)
     return direct_num
 
 
+# Generates the shift number and returns it.
 def gen_shift_num():
     global shift_num
     shift_num = random.randint(1, 10)
     return shift_num
 
 
+# Creates each randomized string, creates a random_string object,
+# and adds it to the random string list.
 def create_strings():
     global rand_strings, direct_num, shift_num
     while len(rand_strings) < 50:
@@ -105,6 +118,7 @@ def create_strings():
         rand_strings.append(new_rand)
 
 
+# Main function.
 if __name__ == '__main__':
     create_strings()
     encrypt()
