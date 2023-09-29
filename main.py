@@ -1,5 +1,6 @@
 import random
 import string
+
 import random_string as rand
 
 rand_strings = []
@@ -9,7 +10,18 @@ direct_num = 0
 
 
 def print_strings():
-    print('stub')
+    global direct_num, shift_num, rand_strings, enc_strings
+    print('=============================================')
+    for i in range(len(rand_strings)):
+        print('============================================')
+        print('')
+        data = rand_strings[i]
+        print('Original string: ' + data.__getattribute__('rand_string'))
+        print('Shift Number: ' + str(data.__getattribute__('shift_num')))
+        print('Direction Number: ' + str(data.__getattribute__('shift_dir')))
+        print('Encrypted String: ' + enc_strings[i])
+
+    print('==========================================')
 
 
 # WIP function
@@ -17,19 +29,15 @@ def encrypt():
     global direct_num, shift_num, rand_strings, enc_strings
     for i in range(len(rand_strings)):
         data = rand_strings[i]
-        print(data.__getattribute__('rand_string'))
         r_string = data.__getattribute__('rand_string')
-        shift_num = data.__getattribute__('shift_num')
+        shift_num = int(data.__getattribute__('shift_num'))
         direct_num = data.__getattribute__('shift_dir')
         print(direct_num)
         print(shift_num)
-
-        encrypted_text = ""
-
-        for j in range(len(r_string)):
-            char = r_string[j]
+        encrypted_text = ''
+        for char in r_string:
             if char.isalpha():
-                is_upper = char.isupper()
+                is_upper = bool(char.isupper())
                 char = char.lower()  # Convert to lowercase for easier manipulation
                 char_code = ord(char)
 
@@ -38,6 +46,8 @@ def encrypt():
                 elif direct_num == 1:
                     encrypted_char_code = ((char_code - ord('a') - shift_num) % 26) + ord('a')
 
+                if encrypted_char_code < 0:
+                    encrypted_char_code += 26
                 encrypted_char = chr(encrypted_char_code)
 
                 if is_upper:
@@ -46,7 +56,7 @@ def encrypt():
             else:
                 encrypted_text += char  # Preserve non-alphabet characters
 
-            enc_strings.append(encrypted_text)
+        enc_strings.append(encrypted_text)
 
 
 def gen_direct_num():
